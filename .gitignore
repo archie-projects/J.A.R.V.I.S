@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Large/regeneratable binaries — reproduced by phase0_setup.fish / phase1_deps.fish
+voices/*.onnx
+voices/*.onnx.json
+*.gguf
+
+# Ollama model blobs never belong in git (they live in Ollama's own store, not this repo)
+
+# OS/editor cruft
+.DS_Store
+*.swp
+
+# Local env overrides if we add any later
+.env
