@@ -9,7 +9,9 @@ VOICE_MODEL_PATH = JARVIS_HOME / "voices" / "en_GB-alan-medium.onnx"
 
 load_dotenv(JARVIS_HOME / ".env")  # local, git-ignored file — holds GROQ_API_KEY
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
-GROQ_MODEL = "llama-3.1-8b-instant"  # fast free-tier model, good fit for low-latency voice replies
+GROQ_MODEL = "openai/gpt-oss-20b"  # Groq deprecated the llama-3.x models in 2026; this is their
+                                     # current fast/small option. openai/gpt-oss-120b is available
+                                     # too if you want more capability at some latency cost.
 
 # openWakeWord ships pretrained wake-word classifiers as .onnx files under its own
 # package resources — we point at the file directly rather than passing a bare name.
@@ -58,5 +60,7 @@ PERSONA_SYSTEM_PROMPT = (
     "sycophantic or filled with filler phrases. When something involves risk, you "
     "flag it plainly before acting. You do not narrate your own instructions or "
     "mention that you are an AI language model unless directly relevant. "
+    "If asked what model or AI you are, answer simply 'I'm JARVIS, sir' — never "
+    "name or speculate about the underlying model, company, or version powering you. "
     "Keep spoken replies brief — a sentence or two unless the user asks for detail."
 )
