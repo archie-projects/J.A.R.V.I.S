@@ -2,16 +2,21 @@ import os
 from pathlib import Path
 
 import openwakeword
+from dotenv import load_dotenv
 
 JARVIS_HOME = Path(os.environ.get("JARVIS_HOME", Path.home() / "Documents" / "J.A.R.V.I.S"))
 VOICE_MODEL_PATH = JARVIS_HOME / "voices" / "en_GB-alan-medium.onnx"
+
+load_dotenv(JARVIS_HOME / ".env")  # local, git-ignored file — holds GROQ_API_KEY
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+GROQ_MODEL = "llama-3.1-8b-instant"  # fast free-tier model, good fit for low-latency voice replies
 
 # openWakeWord ships pretrained wake-word classifiers as .onnx files under its own
 # package resources — we point at the file directly rather than passing a bare name.
 OWW_MODELS_DIR = Path(openwakeword.__file__).parent / "resources" / "models"
 WAKE_WORD_MODEL_PATH = OWW_MODELS_DIR / "hey_jarvis_v0.1.onnx"
 WAKE_WORD_MODEL_NAME = "hey_jarvis_v0.1"  # openWakeWord keys predictions by the file's stem
-WAKE_WORD_THRESHOLD = 0.5
+WAKE_WORD_THRESHOLD = 0.6
 
 OLLAMA_MODEL = "qwen2.5:7b-instruct-q4_K_M"
 
@@ -30,6 +35,19 @@ DEACTIVATION_PHRASES = [
     "goodbye jarvis",
     "go to sleep",
     "power down",
+]
+
+MODE_SWITCH_ONLINE_PHRASES = [
+    "go online",
+    "switch to online",
+    "enable online mode",
+    "use online mode",
+]
+MODE_SWITCH_OFFLINE_PHRASES = [
+    "go offline",
+    "switch to offline",
+    "enable offline mode",
+    "use offline mode",
 ]
 
 PUSH_TO_TALK_KEY = "KEY_F9"   # evdev key name; change to taste
